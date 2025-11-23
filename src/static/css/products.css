@@ -1,0 +1,95 @@
+/* src/static/css/products.css */
+.product-grid h2 {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    color: var(--primary-dark);
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.product-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+.product-info {
+    padding: 1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+}
+
+.company-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.company-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    object-fit: cover;
+}
+
+.company-name {
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; /* Pushes footer to the bottom */
+}
+
+.price {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--primary-dark);
+}
+
+.buy-button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.buy-button:hover {
+    background-color: #FFB300;
+}

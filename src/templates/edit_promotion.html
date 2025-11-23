@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}Editar Promoción de {{ promotion.product.name }}{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Editando la Promoción de <em>{{ promotion.product.name }}</em></h1>
+    <p>Actualiza los detalles de tu oferta especial.</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flashes">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('promotion.edit_promotion', promotion_id=promotion.id) }}" method="post">
+        <div class="form-group">
+            <label for="discount">Porcentaje de Descuento (%) <span class="required">*</span></label>
+            <input type="number" id="discount" name="discount" step="0.01" min="1" max="100" required value="{{ promotion.discount_percentage }}">
+        </div>
+
+        <div class="form-group">
+            <label for="end_date">Fecha de Finalización <span class="required">*</span></label>
+            <input type="datetime-local" id="end_date" name="end_date" required value="{{ promotion.end_date.strftime('%Y-%m-%dT%H:%M') }}">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a href="{{ url_for('company.dashboard') }}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

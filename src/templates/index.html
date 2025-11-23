@@ -1,0 +1,210 @@
+{% extends "layout.html" %}
+
+{% block title %}Apifood - Inicio{% endblock %}
+
+{% block head %}
+{{ super() }}
+<style>
+    .autocomplete-results {
+        position: absolute;
+        background-color: white;
+        border: 1px solid #ccc;
+        z-index: 1000;
+        max-height: 250px;
+        overflow-y: auto;
+        width: 100%;
+        top: 100%;
+        left: 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .autocomplete-item {
+        padding: 12px 15px;
+        cursor: pointer;
+        color: #333;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .autocomplete-item:last-child { border-bottom: none; }
+    .autocomplete-item:hover { background-color: #f5f5f5; }
+    .autocomplete-item strong { color: #000; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>Si tienes Apifood, tienes Todo.</h1>
+        <div class="location-search">
+            <i class="fas fa-map-marker-alt"></i>
+            <input type="text" id="location-input" placeholder="¿Dónde quieres recibir tu compra?">
+        </div>
+    </div>
+</div>
+
+<div class="main-categories">
+    <h2>¿Necesitas algo más?</h2>
+    <div class="category-cards">
+        <a href="#" class="category-card restaurants">
+            <div class="card-content">
+                <img src="https://i.imgur.com/T41h2EV.png" alt="Hamburguesa">
+                <span>Restaurantes</span>
+            </div>
+        </a>
+        <a href="#" class="category-card markets">
+            <div class="card-content">
+                <img src="https://i.imgur.com/v2B5UeT.png" alt="Canasta de mercado">
+                <span>Mercados</span>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="most-searched">
+    <h2>Lo más buscado</h2>
+    <div class="search-tags">
+        <a href="#" class="tag">Brownie express</a>
+        <a href="#" class="tag">Pizza</a>
+        <a href="#" class="tag">Leche</a>
+        <a href="#" class="tag">Queso</a>
+        <a href="#" class="tag">Huevo</a>
+        <a href="#" class="tag">Agua</a>
+        <a href="#" class="tag">Sushi</a>
+        <a href="#" class="tag">Kfc</a>
+        <a href="#" class="tag">Vape</a>
+        <a href="#" class="tag">Helado</a>
+    </div>
+</div>
+
+<div class="company-showcase">
+    <h2 class="showcase-title">¡Los 10 más elegidos!</h2>
+    <div class="company-list">
+        {# --- Marcas Colombianas (Logos Locales) --- #}
+        <a href="https://www.elcorral.com/" target="_blank" class="company-item">
+            <img src="{{ url_for('static', filename='img/logos/el_corral.png') }}" alt="Logo de El Corral">
+            <span>El Corral</span>
+        </a>
+        <a href="https://crepesywaffles.com/" target="_blank" class="company-item">
+            <img src="{{ url_for('static', filename='img/logos/crepes_waffles.png') }}" alt="Logo de Crepes & Waffles">
+            <span>Crepes & Waffles</span>
+        </a>
+        <a href="https://www.frisby.com.co/" target="_blank" class="company-item">
+            <img src="{{ url_for('static', filename='img/logos/frisby.png') }}" alt="Logo de Frisby">
+            <span>Frisby</span>
+        </a>
+
+        {# --- Marcas Internacionales (Logos Locales) --- #}
+        <a href="https://www.starbucks.com/" target="_blank" class="company-item">
+            <img src="{{ url_for('static', filename='img/logos/starbucks.png') }}" alt="Logo de Starbucks">
+            <span>Starbucks</span>
+        </a>
+        <a href="https://www.kfc.com/" target="_blank" class="company-item">
+            <img src="{{ url_for('static', filename='img/logos/kfc.png') }}" alt="Logo de KFC">
+            <span>KFC</span>
+        </a>
+        <a href="https://www.mcdonalds.com/" target="_blank" class="company-item">
+            <img src="{{ url_for('static', filename='img/logos/mcdonalds.png') }}" alt="Logo de McDonald's">
+            <span>McDonald's</span>
+        </a>
+        <a href="https://www.bk.com/" target="_blank" class="company-item">
+            <img src="{{ url_for('static', filename='img/logos/burger_king.png') }}" alt="Logo de Burger King">
+            <span>Burger King</span>
+        </a>
+
+        {# --- Restaurantes Registrados (Dinámicos) --- #}
+        {% for company in companies %}
+            <a href="#" class="company-item">
+                <img src="{{ url_for('static', filename=company.logo_url) if company.logo_url else url_for('static', filename='img/placeholder.svg') }}" alt="Logo de {{ company.name }}">
+                <span>{{ company.name }}</span>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const locationInput = document.getElementById('location-input');
+    if (!locationInput) return;
+
+    const resultsContainer = document.createElement('div');
+    resultsContainer.className = 'autocomplete-results';
+    locationInput.parentNode.appendChild(resultsContainer);
+    locationInput.parentNode.style.position = 'relative';
+    resultsContainer.style.display = 'none';
+
+    function getUserLocation(callback) {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    callback(position.coords);
+                },
+                () => {
+                    callback(null);
+                }
+            );
+        } else {
+            callback(null);
+        }
+    }
+
+    let debounceTimer;
+    locationInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        const query = e.target.value;
+
+        if (query.length < 1) {
+            resultsContainer.style.display = 'none';
+            return;
+        }
+
+        debounceTimer = setTimeout(() => {
+            getUserLocation(coords => {
+                let endpoint = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&countrycodes=co&limit=7`;
+
+                if (coords) {
+                    const viewbox = [
+                        coords.longitude - 0.5,
+                        coords.latitude - 0.5,
+                        coords.longitude + 0.5,
+                        coords.latitude + 0.5
+                    ].join(',');
+                    endpoint += `&viewbox=${viewbox}&bounded=1`;
+                }
+
+                fetch(endpoint)
+                    .then(response => response.json())
+                    .then(data => {
+                        resultsContainer.innerHTML = '';
+                        if (data && data.length > 0) {
+                            resultsContainer.style.display = 'block';
+                            data.forEach(item => {
+                                const resultItem = document.createElement('div');
+                                resultItem.className = 'autocomplete-item';
+                                resultItem.innerHTML = item.display_name;
+
+                                resultItem.addEventListener('click', () => {
+                                    locationInput.value = item.display_name;
+                                    resultsContainer.style.display = 'none';
+                                    console.log("Dirección seleccionada:", item.display_name);
+                                    console.log("Latitud:", item.lat, "Longitud:", item.lon);
+                                });
+                                resultsContainer.appendChild(resultItem);
+                            });
+                        } else {
+                            resultsContainer.style.display = 'none';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching address suggestions:', error);
+                        resultsContainer.style.display = 'none';
+                    });
+            });
+        }, 100); // Reduced delay for faster results
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!locationInput.parentElement.contains(e.target)) {
+            resultsContainer.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,122 @@
+/* src/static/css/header.css */
+
+.main-header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.location-display {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+}
+
+.location-display:hover {
+    background-color: var(--light-gray);
+}
+
+.location-display i {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+#location-text {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.search-bar {
+    flex-grow: 1;
+    margin: 0 2rem;
+    max-width: 500px;
+    position: relative;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 0.8rem 1.2rem 0.8rem 2.5rem; /* Espacio para el icono */
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;
+    font-size: 1rem;
+    background-color: #f5f5f5;
+    transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+    background-color: #fff;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 87, 87, 0.2);
+}
+
+.search-bar::before {
+    content: '\f002'; /* Código del icono de búsqueda de Font Awesome */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav .nav-link {
+    text-decoration: none;
+    margin-left: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-color-light);
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.main-nav .nav-link:hover {
+    color: var(--text-color);
+    background-color: var(--light-gray);
+}
+
+.main-nav .cart-icon i {
+    font-size: 1.5rem;
+    color: var(--text-color-light);
+}
+
+.main-nav .btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white) !important;
+    border: none;
+    box-shadow: 0 4px 10px rgba(255, 87, 87, 0.3);
+}
+
+.main-nav .btn-primary:hover {
+    background-color: var(--primary-dark);
+    color: var(--white) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255, 87, 87, 0.4);
+}

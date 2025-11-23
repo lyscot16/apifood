@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}Iniciar Sesión - Apifood{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-image-panel">
+        <div class="image-panel-content">
+            <h1>El Sabor que te Mueve</h1>
+            <p>Descubre y disfruta de los mejores platos de tus restaurantes favoritos, todo en un solo lugar.</p>
+        </div>
+    </div>
+    <div class="auth-form-panel">
+        <div class="form-content-wrapper">
+            <div class="form-header">
+                <a href="/"><img src="https://i.imgur.com/nJb22fG.png" alt="Apifood Logo" class="logo"></a>
+                <h2>Bienvenido de Vuelta</h2>
+                <p>Ingresa para continuar y explorar un mundo de sabores.</p>
+            </div>
+
+            <form method="POST" action="{{ url_for('user.login') }}" class="auth-form">
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="tu.correo@ejemplo.com" required autofocus>
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                </div>
+            </form>
+
+            <div class="auth-switch">
+                <p>¿Aún no tienes una cuenta? <a href="{{ url_for('user.register') }}">Regístrate ahora</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

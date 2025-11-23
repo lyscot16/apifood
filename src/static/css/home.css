@@ -1,0 +1,228 @@
+/* src/static/css/home.css */
+
+/* Hero Section */
+.hero-section {
+    background-color: #ff5722; /* Naranja Rappi */
+    padding: 4rem 2rem;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.location-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.location-search i {
+    color: #ff5722;
+    margin-right: 0.5rem;
+}
+
+.location-search input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+}
+
+/* Main Categories */
+.main-categories {
+    padding: 2rem;
+}
+
+.main-categories h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.category-cards {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.category-card {
+    border-radius: 15px;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    flex: 1;
+    max-width: 300px;
+    transition: transform 0.2s;
+}
+
+.category-card:hover {
+    transform: scale(1.05);
+}
+
+.category-card.restaurants {
+    background-color: #ff7043;
+}
+
+.category-card.markets {
+    background-color: #26a69a;
+}
+
+.card-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-content img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1rem;
+}
+
+/* Most Searched Section */
+.most-searched {
+    padding: 2rem;
+}
+
+.most-searched h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.search-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.tag {
+    background-color: #f0f0f0;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #333;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.tag:hover {
+    background-color: #e0e0e0;
+}
+
+
+/* Estilos para la sección de Marcas/Restaurantes */
+.company-showcase {
+    width: 100%;
+    padding: 2rem 0;
+    background-color: #f8f9fa; /* Un fondo muy sutil para destacar la sección */
+    margin-bottom: 2rem;
+    border-radius: 8px;
+}
+
+.showcase-title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.company-list {
+    display: flex;
+    overflow-x: auto; /* Permite el scroll horizontal */
+    padding: 1rem 0;
+    scrollbar-width: thin; /* Para Firefox */
+    scrollbar-color: #cccccc #f8f9fa; /* Color del scroll */
+}
+
+/* Para navegadores Webkit como Chrome, Safari */
+.company-list::-webkit-scrollbar {
+    height: 8px;
+}
+
+.company-list::-webkit-scrollbar-track {
+    background: #f8f9fa;
+}
+
+.company-list::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 10px;
+    border: 2px solid #f8f9fa;
+}
+
+.company-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Evita que los ítems se encojan */
+    width: 120px; /* Ancho fijo para cada ítem */
+    margin: 0 1rem;
+    text-decoration: none;
+    color: #555;
+    transition: transform 0.2s ease;
+}
+
+.company-item:hover {
+    transform: translateY(-5px); /* Pequeño efecto al pasar el ratón */
+}
+
+.company-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%; /* Logos circulares */
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 0.5rem;
+}
+
+.company-item span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* El resto de los estilos para la cuadrícula de productos permanece igual */
+.product-grid {
+    padding: 20px;
+}
+
+.grid-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}

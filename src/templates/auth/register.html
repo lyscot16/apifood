@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}Registro de Usuario - Apifood{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-image-panel">
+        <div class="logo">
+            <img src="https://i.imgur.com/nJb22fG.png" alt="Apifood Logo">
+        </div>
+        <div class="footer-text">
+            <p>© 2024 Apifood. Todos los derechos reservados.</p>
+        </div>
+    </div>
+    <div class="auth-form-panel">
+        <div class="form-content-wrapper">
+            <div class="form-header">
+                <h2>Únete a Apifood</h2>
+                <p>Elige tu método de registro preferido y empieza a disfrutar.</p>
+            </div>
+
+             <div class="form-group">
+                <a href="#" class="btn btn-primary" style="background-color: #4285F4;"> <i class="fab fa-google"></i> Continuar con Google</a>
+            </div>
+             <div class="form-group">
+                 <a href="{{ url_for('user.register_email') }}" class="btn btn-primary">Registrarse con Correo Electrónico</a>
+            </div>
+
+            <div class="auth-switch">
+                <p>¿Ya tienes una cuenta? <a href="{{ url_for('user.login') }}">Inicia Sesión</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
