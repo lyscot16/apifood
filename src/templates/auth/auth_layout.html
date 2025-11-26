@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ApiFood{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body class="auth-page">
+    <header class="auth-header">
+        <a href="/" class="logo">apifood</a>
+        <div class="help-icon">
+            <a href="#"><i class="fas fa-question-circle"></i></a>
+        </div>
+    </header>
+
+    <main class="auth-main">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

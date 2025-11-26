@@ -1,37 +1,47 @@
-
-from flask import Flask
 import json
 import os
-from src.database import engine, Base
-from src.models import company, product, promotion, user
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+
+
+db = SQLAlchemy()
 
 def create_app():
-    Base.metadata.create_all(bind=engine)
-    app = Flask(__name__)
 
-    # Load secret key from instance/secret.json
-    instance_path = os.path.join(app.root_path, 'instance')
-    secret_file_path = os.path.join(instance_path, 'secret.json')
+    app = Flask(__name__,
+                instance_path=os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'instance')),
+                instance_relative_config=True,
+                template_folder='./templates',
+                static_folder='./static'
+    )
 
-    if os.path.exists(secret_file_path):
-        with open(secret_file_path, 'r') as f:
-            secrets = json.load(f)
-            app.config['SECRET_KEY'] = secrets.get('SECRET_KEY')
-    else:
-        # Fallback or error handling if secret.json is not found
-        # In a real application, you might want to raise an error or log a warning
-        app.config['SECRET_KEY'] = 'a_fallback_secret_key_you_should_never_use_in_prod'
+    app.config.from_file('secret.json', load=json.load)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 
+    login_manager = LoginManager()
+    login_manager.login_view = 'user.login'
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        from src.models.user import User
+        return User.query.get(int(user_id))
+    
+    db.init_app(app)
+
+    from src.blueprints.main.routes import main_blueprint
+    from src.blueprints.user.routes import user_bp
     from src.blueprints.company.routes import company_bp
     from src.blueprints.product.routes import product_bp
     from src.blueprints.promotion.routes import promotion_bp
-    from src.blueprints.user.routes import user_bp
-    from src.blueprints.main.routes import main_bp
 
-    app.register_blueprint(company_bp)
-    app.register_blueprint(product_bp)
-    app.register_blueprint(promotion_bp)
-    app.register_blueprint(user_bp)
-    app.register_blueprint(main_bp)
+
+    app.register_blueprint(main_blueprint)
+    app.register_blueprint(user_bp, url_prefix='/user')
+    app.register_blueprint(company_bp, url_prefix='/company')
+    app.register_blueprint(product_bp, url_prefix='/product')
+    app.register_blueprint(promotion_bp, url_prefix='/promotion')
+
 
     return app

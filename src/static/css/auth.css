@@ -1,0 +1,197 @@
+:root {
+    --ifood-red: #EA1D2C;
+    --facebook-blue: #3b5998;
+    --google-white: #FFFFFF;
+    --background-color: #f7f3f2;
+    --card-background: #FFFFFF;
+    --text-primary: #333333;
+    --text-secondary: #555555;
+    --border-color: #e6e6e6;
+    --button-text-light: #717171;
+}
+
+body.auth-page {
+    background-color: var(--background-color);
+    font-family: 'Nunito Sans', sans-serif;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.auth-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    width: 100%;
+}
+
+.auth-header .logo {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--ifood-red);
+    text-decoration: none;
+}
+
+.auth-header .help-icon a {
+    font-size: 1.5rem;
+    color: var(--ifood-red);
+    text-decoration: none;
+}
+
+.auth-main {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 3rem;
+}
+
+.auth-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.auth-illustration {
+    flex: 1;
+    text-align: center;
+}
+
+.auth-illustration img {
+    max-width: 100%;
+    height: auto;
+}
+
+.auth-card {
+    flex: 1;
+    max-width: 450px;
+    background-color: var(--card-background);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+}
+
+.card-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.card-header p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.social-login .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.social-login .btn i {
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.btn-facebook {
+    background-color: var(--facebook-blue);
+    color: white;
+}
+
+.btn-facebook:hover {
+    opacity: 0.9;
+}
+
+.btn-google {
+    background-color: var(--google-white);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-google:hover {
+    background-color: #f5f5f5;
+}
+
+.auth-options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.auth-options .option-btn {
+    flex: 1;
+    padding: 0.8rem;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--button-text-light);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.auth-options .option-btn:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.auth-options .option-btn:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-left: none;
+}
+
+.auth-options .option-btn.active, .auth-options .option-btn:hover {
+    background-color: #f5f5f5;
+    color: var(--ifood-red);
+    border-color: #e0e0e0;
+}
+
+.auth-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.auth-form .form-control {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.auth-form .btn-primary {
+    width: 100%;
+    padding: 0.9rem;
+    background-color: var(--ifood-red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.auth-form .btn-primary:hover {
+    background-color: #c81a25;
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 1.5rem;
+}
