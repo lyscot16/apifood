@@ -1,17 +1,19 @@
+
 from pydantic import BaseModel
 
-
 class UserBase(BaseModel):
+    email: str
     username: str
-    email: str | None = None
-
 
 class UserCreate(UserBase):
     password: str
 
-
 class User(UserBase):
     id: int
+    is_active: bool
+    totp_secret: str
+    is_verified: bool
 
     class Config:
-        from_attributes = True
+        orm_mode = True
+

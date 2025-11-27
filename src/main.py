@@ -1,3 +1,4 @@
+
 import json
 import os
 from flask import Flask
@@ -16,7 +17,9 @@ def create_app():
                 static_folder='./static'
     )
 
-    app.config.from_file('secret.json', load=json.load)
+    # Corrected path for secret.json
+    secret_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'secret.json'))
+    app.config.from_file(secret_path, load=json.load)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 
     login_manager = LoginManager()

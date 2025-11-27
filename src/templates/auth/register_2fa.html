@@ -1,0 +1,10 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Scan QR Code</h2>
+  <p>Scan the QR code below with your authenticator app.</p>
+  <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+  <br><br>
+  <a href="{{ url_for('user.login') }}" class="btn btn-primary">Login</a>
+{% endblock %}

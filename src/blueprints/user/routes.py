@@ -2,8 +2,11 @@
 from flask import (
     Blueprint, request, jsonify, render_template, redirect, url_for, flash, session
 )
-from sqlalchemy.orm import Session
 from werkzeug.security import check_password_hash
+import pyotp
+import qrcode
+import io
+from base64 import b64encode
 
 from src.blueprints.user import crud, schema
 from src.database import SessionLocal
@@ -39,15 +42,39 @@ def login():
             error = 'Incorrect password.'
 
         if error is None:
-            session.clear()
-            session['user_id'] = user.id
-            session['username'] = user.username
-            flash('Login successful!', 'success')
-            return redirect(url_for('main.index'))
+            session['user_id_2fa'] = user.id  # Temporary session for 2FA
+            return redirect(url_for('user.verify_2fa'))
 
         flash(error, 'danger')
 
     return render_template('auth/login.html')
+
+@user_bp.route('/verify-2fa', methods=('GET', 'POST'))
+def verify_2fa():
+    user_id = session.get('user_id_2fa')
+    if not user_id:
+        return redirect(url_for('user.login'))
+
+    if request.method == 'POST':
+        db = get_db()
+        user = crud.get_user(db, user_id)
+        token = request.form['token']
+        totp = pyotp.TOTP(user.totp_secret)
+
+        if totp.verify(token):
+            session.clear()
+            session['user_id'] = user.id
+            session['username'] = user.username
+            # Mark user as verified if you have such a field
+            # user.is_verified = True
+            # db.commit()
+            flash('Login successful!', 'success')
+            return redirect(url_for('main.index'))
+        else:
+            flash('Invalid 2FA token.', 'danger')
+
+    return render_template('auth/verify_2fa.html')
+
 
 @user_bp.route('/register', methods=('GET', 'POST'))
 def register():
@@ -70,9 +97,25 @@ def register():
 
         if error is None:
             user_in = schema.UserCreate(email=email, password=password, username=username)
-            crud.create_user(db=db, user=user_in)
-            flash('You have successfully registered! Please log in.', 'success')
-            return redirect(url_for('user.login'))
+            user = crud.create_user(db=db, user=user_in)
+
+            # Generate TOTP URI and QR code
+            totp_uri = pyotp.totp.TOTP(user.totp_secret).provisioning_uri(
+                name=user.email, issuer_name="ApiFood"
+            )
+            
+            # For the user, you would render this in a template
+            print(f"TOTP URI: {totp_uri}") # Log to console
+            
+            # Generate QR code and pass to template
+            img = qrcode.make(totp_uri)
+            buf = io.BytesIO()
+            img.save(buf)
+            buf.seek(0)
+            qr_code_b64 = b64encode(buf.read()).decode('utf-8')
+
+            flash('You have successfully registered! Please scan the QR code and complete 2FA.', 'success')
+            return render_template('auth/register_2fa.html', qr_code=qr_code_b64)
 
         flash(error, 'danger')
 
@@ -86,7 +129,7 @@ def logout():
     return redirect(url_for('main.index'))
 
 
-# API Routes
+# API Routes (Keeping them as they are for now)
 @user_bp.route("/users/", methods=["POST"])
 def create_user_api():
     db = get_db()

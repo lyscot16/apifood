@@ -1,0 +1,13 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Enter 2FA Token</h2>
+  <form method="post">
+    <div class="form-group">
+      <label for="token">Token</label>
+      <input type="text" name="token" id="token" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Verify</button>
+  </form>
+{% endblock %}
