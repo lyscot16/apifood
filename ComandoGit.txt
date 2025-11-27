@@ -19,7 +19,7 @@
    git add archivo.py           # Un archivo específico
 
 5. GUARDAR CAMBIOS:
-   git commit -m "verificacion 2af"
+   git commit -m "Descripción clara de lo que hiciste"
 
 6. SUBIR A GITHUB:
    git push
